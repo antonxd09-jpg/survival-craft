@@ -13,6 +13,14 @@ public class MainActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         gameView = new GameView(this);
         setContentView(gameView);
+        
+        // Поток для обновления движения
+        new Thread(() -> {
+            while (true) {
+                gameView.updateMovement();
+                try { Thread.sleep(16); } catch (Exception e) {}
+            }
+        }).start();
     }
 
     @Override
